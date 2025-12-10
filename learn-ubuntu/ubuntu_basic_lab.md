@@ -1,0 +1,112 @@
+# Ubuntu Basic Commands Lab
+
+## 1. What is Ubuntu?
+
+Ubuntu is a free and open-source Linux operating system based on Debian.
+It is widely used in cloud computing, DevOps, AI, robotics, servers, and
+cybersecurity.
+
+------------------------------------------------------------------------
+
+## 2. Directory Navigation
+
+``` bash
+pwd
+ls
+ls -l
+ls -a
+cd foldername
+cd ..
+cd /
+```
+
+------------------------------------------------------------------------
+
+## 3. File Operations
+
+``` bash
+touch file.txt
+cat file.txt
+nano file.txt
+cp a.txt b.txt
+mv a.txt b.txt
+rm file.txt
+```
+
+------------------------------------------------------------------------
+
+## 4. Folder Operations
+
+``` bash
+mkdir test
+rmdir test
+rm -rf test
+```
+
+------------------------------------------------------------------------
+
+## 5. Package Management
+
+``` bash
+sudo apt update
+sudo apt upgrade
+sudo apt install git
+sudo apt remove git
+```
+
+------------------------------------------------------------------------
+
+## 6. System Information
+
+``` bash
+whoami
+uname -a
+df -h
+free -h
+top
+uptime
+```
+
+------------------------------------------------------------------------
+
+## 7. Network Commands
+
+``` bash
+ip a
+ping google.com
+wget url
+curl url
+```
+
+------------------------------------------------------------------------
+
+## 8. Permissions
+
+``` bash
+chmod 755 file.sh
+chmod +x file.sh
+chown user:user file.txt
+```
+
+------------------------------------------------------------------------
+
+## 9. Process Management
+
+``` bash
+ps
+ps aux
+kill PID
+```
+
+------------------------------------------------------------------------
+
+## 10. Practice Lab
+
+``` bash
+mkdir ubuntu-basic-lab
+cd ubuntu-basic-lab
+touch test.txt
+nano test.txt
+cat test.txt
+ls -l
+```

@@ -1,0 +1,142 @@
+# Ubuntu Advanced Commands Lab (Piping & Redirection)
+
+## 1. Symbols
+
+  Symbol   Meaning
+  -------- ------------------
+  \>       Output overwrite
+  \>\>     Output append
+  \<       Input from file
+  2\>      Error output
+  &\>      Output + Error
+           
+
+------------------------------------------------------------------------
+
+## 2. Lab Setup
+
+``` bash
+mkdir piping-lab
+cd piping-lab
+touch file1.txt file2.txt file3.txt
+echo "Linux is powerful" > file1.txt
+echo "Ubuntu is based on Linux" > file2.txt
+echo "DevOps uses Linux heavily" > file3.txt
+```
+
+------------------------------------------------------------------------
+
+## 3. Output Redirection
+
+``` bash
+ls > output.txt
+date >> output.txt
+cat output.txt
+```
+
+------------------------------------------------------------------------
+
+## 4. Input Redirection
+
+``` bash
+wc -l < file1.txt
+```
+
+------------------------------------------------------------------------
+
+## 5. Error Redirection
+
+``` bash
+ls wrongfile 2> error.txt
+cat error.txt
+```
+
+------------------------------------------------------------------------
+
+## 6. Output + Error
+
+``` bash
+ls file1.txt wrongfile &> all.txt
+cat all.txt
+```
+
+------------------------------------------------------------------------
+
+## 7. Piping
+
+``` bash
+ls | wc -l
+cat file2.txt | grep Linux
+```
+
+------------------------------------------------------------------------
+
+## 8. Multiple Pipes
+
+``` bash
+ps aux | grep root | wc -l
+```
+
+------------------------------------------------------------------------
+
+## 9. Pipe + Redirect to File
+
+``` bash
+cat file*.txt | grep Linux > linux.txt
+cat linux.txt
+```
+
+------------------------------------------------------------------------
+
+## 10. Sorting Using Pipe
+
+``` bash
+cat file*.txt | sort > sorted.txt
+cat sorted.txt
+```
+
+------------------------------------------------------------------------
+
+## 11. Using tee
+
+``` bash
+ls | tee list.txt
+cat list.txt
+```
+
+------------------------------------------------------------------------
+
+## 12. Using xargs
+
+``` bash
+ls *.txt | xargs wc -l
+```
+
+------------------------------------------------------------------------
+
+## 13. DevOps Log Filtering Lab
+
+``` bash
+echo "ERROR: Disk full" >> app.log
+echo "INFO: Server started" >> app.log
+echo "ERROR: Memory leak" >> app.log
+echo "INFO: Backup completed" >> app.log
+```
+
+``` bash
+cat app.log | grep ERROR > error_logs.txt
+cat error_logs.txt
+```
+
+``` bash
+cat app.log | grep ERROR | wc -l
+```
+
+------------------------------------------------------------------------
+
+## 14. Cleanup
+
+``` bash
+cd ..
+rm -rf piping-lab
+```
