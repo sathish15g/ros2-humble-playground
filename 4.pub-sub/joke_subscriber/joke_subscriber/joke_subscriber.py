@@ -3,17 +3,23 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
+from rclpy.qos import QoSProfile, QoSReliabilityPolicy
 
 
 class JokeSubscriber(Node):
     def __init__(self):
         super().__init__('joke_subscriber')
+        qos = QoSProfile(
+            reliability=QoSReliabilityPolicy.RELIABLE,
+            depth=10
+        )
 
         self.subscription = self.create_subscription(
             String,
             '/programming_jokes',
             self.listener_callback,
-            10
+            10,
+            qos
         )
 
         self.get_logger().info("😂 Joke Subscriber ready!")

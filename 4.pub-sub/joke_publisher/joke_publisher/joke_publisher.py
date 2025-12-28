@@ -3,17 +3,24 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
+from rclpy.qos import QoSProfile, QoSReliabilityPolicy
 import random
 
 
 class JokePublisher(Node):
     def __init__(self):
         super().__init__('joke_publisher')
+        qos = QoSProfile(
+            reliability=QoSReliabilityPolicy.RELIABLE,
+            depth=10
+        )
+
 
         self.publisher_ = self.create_publisher(
             String,
             '/programming_jokes',
-            10
+            10,
+            qos
         )
 
         self.jokes = [
