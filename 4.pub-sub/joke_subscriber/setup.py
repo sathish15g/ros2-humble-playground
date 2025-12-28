@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'joke_subscriber = joke_subscriber.joke_subscriber:main',
         ],
     },
 )
