@@ -47,16 +47,16 @@ The RMW (ROS Middleware) abstraction layer enables ROS 2 to support multiple DDS
 
 ## DDS Core Concepts Mapped to ROS 2
 
-| DDS Concept | ROS 2 Equivalent | Description |
-|-------------|------------------|-------------|
-| Domain | ROS Domain (ROS_DOMAIN_ID) | Logical separation of communication domains |
-| Topic | ROS Topic | Named communication channel |
-| Publisher | ROS Publisher | Entity that sends data |
-| Subscriber | ROS Subscriber | Entity that receives data |
-| DataWriter | Publisher Internals | DDS-level data transmission |
-| DataReader | Subscriber Internals | DDS-level data reception |
-| QoS | ROS QoS Profiles | Quality of service policies |
-| DomainParticipant | Node Context | DDS participant managing publishers/subscribers |
+| DDS Concept          | ROS 2 Equivalent      | Description                          |
+|----------------------|-----------------------|--------------------------------------|
+| Domain               | ROS Domain (ROS_DOMAIN_ID) | Logical separation of communication domains |
+| Topic                | ROS Topic             | Named communication channel          |
+| Publisher            | ROS Publisher         | Entity that sends data               |
+| Subscriber           | ROS Subscriber        | Entity that receives data            |
+| DataWriter           | Publisher Internals   | DDS-level data transmission          |
+| DataReader           | Subscriber Internals  | DDS-level data reception             |
+| QoS                  | ROS QoS Profiles      | Quality of service policies          |
+| DomainParticipant    | Node Context          | DDS participant managing publishers/subscribers |
 
 ![Nodes Topic and Service](images/Nodes-TopicandService.gif)
 
@@ -82,14 +82,14 @@ This distributed discovery is why ROS 2 nodes can communicate without a `roscore
 
 QoS policies define the behavior and guarantees of data communication. Key policies include:
 
-| QoS Policy | Options | Description |
-|------------|---------|-------------|
-| Reliability | Reliable / Best Effort | Delivery guarantees |
-| Durability | Transient / Volatile | Data persistence across reconnections |
-| History | Keep Last / Keep All | Message buffering strategy |
-| Depth | Integer value | Queue size for buffered messages |
-| Deadline | Duration | Maximum acceptable latency |
-| Liveliness | Various modes | Node health monitoring |
+| QoS Policy | Options                  | Description                  |
+|------------|--------------------------|------------------------------|
+| Reliability| Reliable / Best Effort   | Delivery guarantees          |
+| Durability | Transient / Volatile     | Data persistence across reconnections |
+| History    | Keep Last / Keep All     | Message buffering strategy   |
+| Depth      | Integer value            | Queue size for buffered messages |
+| Deadline   | Duration                 | Maximum acceptable latency   |
+| Liveliness | Various modes            | Node health monitoring       |
 
 Example ROS 2 QoS configuration:
 
@@ -108,12 +108,12 @@ qos = QoSProfile(
 
 ROS 2 supports multiple DDS vendors through the RMW abstraction:
 
-| DDS Vendor | ROS 2 Support | Notes |
-|------------|----------------|-------|
-| Fast DDS (eProsima) | ✅ Default | Open-source, high performance |
-| Cyclone DDS | ✅ Supported | Lightweight, fast discovery |
-| RTI Connext DDS | ✅ Commercial | Enterprise-grade, real-time |
-| GurumDDS | ⚠️ Limited | Industrial applications |
+| DDS Vendor          | ROS 2 Support | Notes                      |
+|---------------------|---------------|----------------------------|
+| Fast DDS (eProsima) | Default       | Open-source, high performance |
+| Cyclone DDS         | Supported     | Lightweight, fast discovery |
+| RTI Connext DDS     | Commercial    | Enterprise-grade, real-time |
+| GurumDDS            | Limited       | Industrial applications    |
 
 To switch DDS implementations:
 
@@ -187,14 +187,14 @@ This message transmission occurs entirely through DDS protocols, independent of 
 
 ## DDS vs ROS 1 Transport Comparison
 
-| Feature | ROS 1 | ROS 2 (DDS) |
-|---------|-------|-------------|
-| Central Coordinator | Required (ROS Master) | ❌ Decentralized |
-| Discovery | Centralized | Distributed |
-| QoS Support | Minimal | Advanced |
-| Real-Time Performance | Limited | Excellent |
-| Security | None | Built-in |
-| Scalability | Limited | High |
+| Feature              | ROS 1          | ROS 2 (DDS)    |
+|----------------------|----------------|----------------|
+| Central Coordinator  | Required (ROS Master) | Decentralized |
+| Discovery            | Centralized    | Distributed    |
+| QoS Support          | Minimal        | Advanced       |
+| Real-Time Performance| Limited        | Excellent      |
+| Security             | None           | Built-in       |
+| Scalability          | Limited        | High           |
 
 ## When DDS Provides Maximum Value
 
