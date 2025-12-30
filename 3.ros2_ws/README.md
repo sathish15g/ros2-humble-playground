@@ -65,8 +65,10 @@ A **message** defines the structure of data exchanged between nodes.
 ROS 2 **does NOT run standalone Python files**.
 
 To execute your code, use:
-ros2 run <package> <executable>
 
+```
+ros2 run <package> <executable>
+```
 
 Your code must therefore reside inside a ROS 2 package containing:
 
@@ -79,39 +81,41 @@ Your code must therefore reside inside a ROS 2 package containing:
 ## 3. Creating the ROS 2 Python Package
 
 ### Command Used
-ros2 pkg create example_program
---build-type ament_python
---dependencies rclpy sensor_msgs
 
+```
+ros2 pkg create example_program --build-type ament_python --dependencies rclpy sensor_msgs
+```
 
 ### What This Command Does
 
-| Part | Meaning |
-|------|----------|
-| `ros2 pkg create` | Create a ROS 2 package |
-| `example_program` | Package name |
-| `ament_python` | Python-based package configuration |
-| `rclpy` | ROS 2 Python client library |
-| `sensor_msgs` | Provides message types like `LaserScan`, `Image` |
+| Part                  | Meaning                                      |
+|-----------------------|----------------------------------------------|
+| `ros2 pkg create`     | Create a ROS 2 package                       |
+| `example_program`     | Package name                                 |
+| `ament_python`        | Python-based package configuration           |
+| `rclpy`               | ROS 2 Python client library                  |
+| `sensor_msgs`         | Provides message types like `LaserScan`, `Image` |
 
 ---
 
 ## 4. Workspace Structure
 
+```
 ros2_ws/
 ├── src/
-│ └── example_program/
-│ ├── example_program/
-│ │ ├── init.py
-│ │ └── obstacle_detector.py
-│ ├── package.xml
-│ ├── setup.py
-│ ├── setup.cfg
-│ └── resource/
-│ └── example_program
+│   └── example_program/
+│       ├── example_program/
+│       │   ├── __init__.py
+│       │   └── obstacle_detector.py
+│       ├── package.xml
+│       ├── setup.py
+│       ├── setup.cfg
+│       └── resource/
+│           └── example_program
 ├── build/
 ├── install/
 └── log/
+```
 
 
 ---
@@ -119,29 +123,32 @@ ros2_ws/
 ## 5. Subscriber Node Code
 
 **File:** `obstacle_detector.py`
+
+```python
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
 
 class ObstacleDetector(Node):
-def init(self):
-super().init('obstacle_detector')
-self.subscription = self.create_subscription(
-LaserScan,
-'laser_scan',
-self.laser_callback,
-10
-)
+    def __init__(self):
+        super().__init__('obstacle_detector')
+        self.subscription = self.create_subscription(
+            LaserScan,
+            'laser_scan',
+            self.laser_callback,
+            10
+        )
 
-def laser_callback(self, msg):
-    self.get_logger().info("Laser data received")
+    def laser_callback(self, msg):
+        self.get_logger().info("Laser data received")
 
 def main():
-rclpy.init()
-node = ObstacleDetector()
-rclpy.spin(node)
-node.destroy_node()
-rclpy.shutdown()
+    rclpy.init()
+    node = ObstacleDetector()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+```
 
 
 ---
@@ -149,16 +156,20 @@ rclpy.shutdown()
 ## 6. Registering the Executable
 
 **File:** `setup.py`
-entry_points={
-'console_scripts': [
-'obstacle_detector = example_program.obstacle_detector:main',
-],
-},
 
+```python
+entry_points={
+    'console_scripts': [
+        'obstacle_detector = example_program.obstacle_detector:main',
+    ],
+},
+```
 
 This allows the node to be launched using:
 
+```
 ros2 run example_program obstacle_detector
+```
 
 
 ---
@@ -166,16 +177,20 @@ ros2 run example_program obstacle_detector
 ## 7. Build Process (Correct Way)
 
 ### ❌ Common Mistake
-./setup.py
 
-**Reason:** `setup.py` is **not** a shell script and shouldn’t be executed directly.
+```
+./setup.py
+```
+
+**Reason:** `setup.py` is **not** a shell script and shouldn't be executed directly.
 
 ### ✅ Correct Workflow
 
-
+```
 cd ~/ros2_ws
 colcon build
 source install/setup.bash
+```
 
 
 ---
@@ -184,11 +199,12 @@ source install/setup.bash
 
 Run the node using:
 
+```
 ros2 run example_program obstacle_detector
-
+```
 
 **Expected behavior:**
-- Node starts successfully  
+- Node starts successfully
 - Waits for `/laser_scan` messages  
 
 ---
@@ -197,19 +213,24 @@ ros2 run example_program obstacle_detector
 
 ### 9.1 Open a New Terminal
 
+```
 source /opt/ros/humble/setup.bash
 source ~/ros2_ws/install/setup.bash
-
+```
 
 ### 9.2 Publish Fake LaserScan Data
 
+```
 ros2 topic pub -r 5 /laser_scan sensor_msgs/msg/LaserScan "{}"
-
+```
 
 ### 9.3 Expected Output
+
 In the subscriber terminal:
 
+```
 [INFO] [obstacle_detector]: Laser data received
+```
 
 ---
 
@@ -217,11 +238,18 @@ In the subscriber terminal:
 
 ### List All Topics
 
+```
 ros2 topic list
+```
 
 ### Get Information About a Topic
 
+```
 ros2 topic info /laser_scan
+```
 
 ### Echo Messages From a Topic
+
+```
 ros2 topic echo /laser_scan
+```

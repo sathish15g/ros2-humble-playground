@@ -31,3 +31,6 @@ A hands-on ROS 2 Humble playground designed for learning, experimentation, and p
 
 ### 6. RCL (ROS Client Library)
 - [RCL Overview](6.RCL/README.md)
+
+### 7. ROS Actions and Parameters
+- [ROS 2 Actions and Parameters](7.ros-actions-and-params/README.md)
