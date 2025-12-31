@@ -27,10 +27,10 @@ A hands-on ROS 2 Humble playground designed for learning, experimentation, and p
 
 ### 5. DDS (Data Distribution Service)
 - [DDS in ROS 2](5.DDS/README.md)
-- [Client-Service Example](5.DDS/CLINET_SERVICE.md)
 
 ### 6. RCL (ROS Client Library)
 - [RCL Overview](6.RCL/README.md)
+- [Client-Service Example](6.RCL/CLINET_SERVICE.md)
 
 ### 7. ROS Actions and Parameters
 - [ROS 2 Actions and Parameters](7.ros-actions-and-params/README.md)
