@@ -97,45 +97,56 @@ ros2_demo/
 │   └── param_node.py
 ```
 
-## 6. Action Code
-
-### Fibonacci Action Server
-
-**fibonacci_action_server.py**
-
-```python
-import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionServer
 from action_tutorials_interfaces.action import Fibonacci
+import rclpy
+import time
+
 
 class FibonacciActionServer(Node):
 
     def __init__(self):
         super().__init__('fibonacci_action_server')
-        self._server = ActionServer(
+
+        self._action_server = ActionServer(
             self,
             Fibonacci,
-            'fibonacci',
+            'fibonacci',  # ✅ SAME NAME
             self.execute_callback
         )
 
     def execute_callback(self, goal_handle):
-        self.get_logger().info('Executing Fibonacci action')
+        self.get_logger().info('Executing goal...')
 
         feedback = Fibonacci.Feedback()
         sequence = [0, 1]
 
         for i in range(1, goal_handle.request.order):
             sequence.append(sequence[i] + sequence[i - 1])
-            feedback.sequence = sequence
+
+            feedback.partial_sequence = sequence   # ✅ FIX
             goal_handle.publish_feedback(feedback)
 
+            time.sleep(1)
+
         goal_handle.succeed()
+
         result = Fibonacci.Result()
         result.sequence = sequence
         return result
 
+
+
+
+def main():
+    rclpy.init()
+    node = FibonacciActionServer()
+    try:
+        rclpy.spin(node)
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
 
 def main(args=None):
     rclpy.init(args=args)
@@ -156,31 +167,65 @@ from rclpy.node import Node
 from rclpy.action import ActionClient
 from action_tutorials_interfaces.action import Fibonacci
 
+
 class FibonacciActionClient(Node):
 
     def __init__(self):
         super().__init__('fibonacci_action_client')
+
         self._client = ActionClient(self, Fibonacci, 'fibonacci')
 
-    def send_goal(self, order):
-        goal = Fibonacci.Goal()
-        goal.order = order
+        # ✅ SEND GOAL AUTOMATICALLY
+        self.send_goal()
 
+    def send_goal(self):
+        goal_msg = Fibonacci.Goal()
+        goal_msg.order = 10
+
+        self.get_logger().info('Waiting for action server...')
         self._client.wait_for_server()
-        self._client.send_goal_async(goal, feedback_callback=self.feedback_callback)
 
-    def feedback_callback(self, feedback):
+        self.get_logger().info('Sending goal...')
+        self._send_goal_future = self._client.send_goal_async(
+            goal_msg,
+            feedback_callback=self.feedback_callback
+        )
+        self._send_goal_future.add_done_callback(self.goal_response_callback)
+
+    def goal_response_callback(self, future):
+        goal_handle = future.result()
+
+        if not goal_handle.accepted:
+            self.get_logger().info('Goal rejected')
+            return
+
+        self.get_logger().info('Goal accepted')
+        self._result_future = goal_handle.get_result_async()
+        self._result_future.add_done_callback(self.result_callback)
+
+    def feedback_callback(self, feedback_msg):
         self.get_logger().info(
-            f'Feedback: {feedback.feedback.sequence}'
+            f'Feedback: {feedback_msg.feedback.partial_sequence}'
         )
 
 
-def main(args=None):
-    rclpy.init(args=args)
+    def result_callback(self, future):
+        result = future.result().result
+        self.get_logger().info(f'Result: {result.sequence}')
+        self.destroy_node()
+
+
+
+def main():
+    rclpy.init()
     node = FibonacciActionClient()
-    node.send_goal(10)
-    rclpy.spin(node)
-    rclpy.shutdown()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
 ```
 
 *See: [fibonacci_action_client.py](ros2_demo/fibonacci_action_client.py)*
@@ -195,22 +240,22 @@ def main(args=None):
 import rclpy
 from rclpy.node import Node
 
-class ParamNode(Node):
 
+class ParamNode(Node):
     def __init__(self):
         super().__init__('param_node')
-        self.declare_parameter('robot_speed', 1.0)
-        self.timer = self.create_timer(2.0, self.timer_callback)
 
-    def timer_callback(self):
+        self.declare_parameter('robot_speed', 1.0)
         speed = self.get_parameter('robot_speed').value
+
         self.get_logger().info(f'Robot speed: {speed}')
 
 
-def main(args=None):
-    rclpy.init(args=args)
+def main():
+    rclpy.init()
     node = ParamNode()
     rclpy.spin(node)
+    node.destroy_node()
     rclpy.shutdown()
 ```
 
@@ -351,37 +396,52 @@ File name: `ros2_demo/launch/demo_launch.py`
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
+
 def generate_launch_description():
-
-    fibonacci_server = Node(
-        package='ros2_demo',
-        executable='fibonacci_action_server',
-        name='fibonacci_action_server'
-    )
-
-    fibonacci_client = Node(
-        package='ros2_demo',
-        executable='fibonacci_action_client',
-        name='fibonacci_action_client'
-    )
-
-    param_node = Node(
-        package='ros2_demo',
-        executable='param_node',
-        name='param_node',
-        parameters=[
-            {'robot_speed': 2.0}
-        ]
-    )
-
     return LaunchDescription([
-        fibonacci_server,
-        fibonacci_client,
-        param_node
+
+        Node(
+            package='ros2_demo',
+            executable='fibonacci_action_server',
+            name='fibonacci_action_server'
+        ),
+
+        Node(
+            package='ros2_demo',
+            executable='fibonacci_action_client',
+            name='fibonacci_action_client'
+        ),
+
+        Node(
+            package='ros2_demo',
+            executable='param_node',
+            name='param_node',
+            parameters=[{'robot_speed': 2.0}]
+        ),
     ])
 ```
 
 *See: [demo_launch.py](ros2_demo/launch/demo_launch.py)*
+
+## Code Fixes (2026-01-07)
+
+A small code fix was applied; please review and verify the following files for the change:
+
+- `fibonacci_action_server.py`: [ros2_demo/ros2_demo/fibonacci_action_server.py](ros2_demo/ros2_demo/fibonacci_action_server.py)
+- `fibonacci_action_client.py`: [ros2_demo/ros2_demo/fibonacci_action_client.py](ros2_demo/ros2_demo/fibonacci_action_client.py)
+- `param_node.py`: [ros2_demo/ros2_demo/param_node.py](ros2_demo/ros2_demo/param_node.py)
+- `demo_launch.py`: [ros2_demo/launch/demo_launch.py](ros2_demo/launch/demo_launch.py)
+
+Quick verification steps:
+
+```bash
+colcon build
+source install/setup.bash
+ros2 launch ros2_demo demo_launch.py
+```
+
+If you want, I can run a quick build and launch to sanity-check the fix — tell me to proceed.
+
 
 ## 17. Update setup.py to Install Launch Files
 
