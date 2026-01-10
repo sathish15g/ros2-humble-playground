@@ -99,17 +99,9 @@ source install/setup.bash
 ros2 run temperature_publisher temperature_publisher
 ```
 
-### Expected Output
-
-```
-[INFO] [temperature_publisher]: Published Temperature: 28.7 °C
-[INFO] [temperature_publisher]: Published Temperature: 29.2 °C
-[INFO] [temperature_publisher]: Published Temperature: 28.9 °C
-```
-
 **Screenshot:**
 
-![Publisher Logs](./temperature_publisher/images/publisher%20logs.png)
+![Publisher Logs](./images/publisher%20logs.png)
 
 ---
 
@@ -121,24 +113,14 @@ ros2 run temperature_publisher temperature_publisher
 ros2 topic list
 ```
 
-**Expected Output:**
-```
-/my_temperature_topic
-```
+**Screenshot:**
 
-![Topic List](./temperature_publisher/images/Topic%20list.png)
+![Topic List](./images/Topic%20list.png)
 
 ### 2. Check Topic Information
 
 ```bash
 ros2 topic info /my_temperature_topic
-```
-
-**Expected Output:**
-```
-Type: sensor_msgs/msg/Temperature
-Publisher count: 1
-Subscriber count: 0
 ```
 
 ### 3. Echo Published Data
@@ -147,27 +129,7 @@ Subscriber count: 0
 ros2 topic echo /my_temperature_topic
 ```
 
-**Sample Output:**
-```yaml
-header:
-  stamp:
-    sec: 1715178301
-    nanosec: 123456789
-  frame_id: temperature_sensor_frame
-temperature: 28.63
-variance: 0.0
----
-header:
-  stamp:
-    sec: 1715178303
-    nanosec: 456789123
-  frame_id: temperature_sensor_frame
-temperature: 29.15
-variance: 0.0
----
-```
-
-![Topic Echo](./temperature_publisher/images/topic%20echo.png)
+![Topic Echo](./images/topic%20echo.png)
 
 ---
 
@@ -180,69 +142,21 @@ variance: 0.0
 | **Naming** | Descriptive and sensor-specific |
 | **Integration** | Easy to integrate with subscribers |
 
+### Flow-Diagram using rqt_graph
+```bash
+sudo apt install ros-humble-rqt-graph
+rqt_graph
+```
+
+![Topic Echo](./images/rosgraph-temp-publisher.png)
+
+
 ### Publishing Rate: 2 seconds
 
 | Aspect | Rationale |
 |--------|-----------|
 | **Frequency** | Simulates real environmental sensor behavior |
 | **Responsiveness** | Adequate for temperature monitoring applications |
-
-### QoS Profile
-
-| Parameter | Value | Rationale |
-|-----------|-------|-----------|
-| **Queue Depth** | 10 | Suitable for periodic sensor data |
-| **Reliability** | Best Effort | Prevents message loss if subscribers lag briefly |
-
----
-
-## Troubleshooting
-
-### Issue: `sensor_msgs not found`
-
-**Solution:**
-```bash
-sudo apt install ros-humble-sensor-msgs
-```
-
-### Issue: Package not detected after build
-
-**Solution:**
-```bash
-source install/setup.bash
-```
-
-### Issue: Topic not appearing in `ros2 topic list`
-
-**Solution:**
-1. Verify the node is running:
-   ```bash
-   ros2 node list
-   ```
-2. Check the node logs:
-   ```bash
-   ros2 run temperature_publisher temperature_publisher --verbose
-   ```
-
----
-
-## Debug Tools
-
-Use these ROS 2 tools for debugging and monitoring:
-
-```bash
-# Check ROS 2 system health
-ros2 doctor
-
-# Get detailed topic information
-ros2 topic info /my_temperature_topic
-
-# List all active nodes
-ros2 node list
-
-# Get node information
-ros2 node info /temperature_publisher
-```
 
 ---
 

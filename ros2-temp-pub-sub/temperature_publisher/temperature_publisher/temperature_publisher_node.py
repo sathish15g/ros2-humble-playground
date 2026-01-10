@@ -21,7 +21,7 @@ class TemperaturePublisher(Node):
         )
 
         # Timer: 2 seconds publishing rate
-        self.timer = self.create_timer(1.0, self.publish_temperature)
+        self.timer = self.create_timer(2.0, self.publish_temperature)
 
         self.get_logger().info('Temperature Publisher (sensor_msgs) started.')
 
