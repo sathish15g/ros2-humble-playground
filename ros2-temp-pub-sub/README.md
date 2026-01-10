@@ -31,6 +31,14 @@ The node publishes temperature readings every **2 seconds**, which can be visual
 
 ## Message Type Used
 
+### Package creation
+ ```
+ ros2 pkg create temperature_publisher \
+  --build-type ament_python \
+  --dependencies rclpy sensor_msgs
+
+ ```
+
 ### `sensor_msgs/Temperature`
 
 ```
@@ -158,6 +166,10 @@ rqt_graph
 | **Frequency** | Simulates real environmental sensor behavior |
 | **Responsiveness** | Adequate for temperature monitoring applications |
 
+### QoS Profile
+QoS depth = 10
+Suitable for sensor data
+
 ---
 
 ## Conclusion
@@ -169,4 +181,4 @@ This project demonstrates how to publish standardized temperature sensor data in
 - Sensor data integration in robotics applications
 - Message publishing patterns in ROS 2
 
-The architecture can be extended with subscriber nodes, data logging, or integration with monitoring dashboards.
+The architecture can be extended with subscriber nodes.
