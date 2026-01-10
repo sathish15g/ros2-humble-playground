@@ -109,7 +109,7 @@ ros2 run temperature_publisher temperature_publisher
 
 **Screenshot:**
 
-![Publisher Logs](./images/publisher%20logs.png)
+![Publisher Logs](../images/publisher%20logs.png)
 
 ---
 
@@ -123,7 +123,7 @@ ros2 topic list
 
 **Screenshot:**
 
-![Topic List](./images/Topic%20list.png)
+![Topic List](../images/Topic%20list.png)
 
 ### 2. Check Topic Information
 
@@ -137,7 +137,7 @@ ros2 topic info /my_temperature_topic
 ros2 topic echo /my_temperature_topic
 ```
 
-![Topic Echo](./images/topic%20echo.png)
+![Topic Echo](../images/topic%20echo.png)
 
 ---
 
@@ -156,7 +156,7 @@ sudo apt install ros-humble-rqt-graph
 rqt_graph
 ```
 
-![Topic Echo](./images/rosgraph-temp-publisher.png)
+![Topic Echo](../images/rosgraph-temp-publisher.png)
 
 
 ### Publishing Rate: 2 seconds
