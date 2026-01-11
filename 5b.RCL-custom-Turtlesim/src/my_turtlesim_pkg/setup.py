@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='sathish15g',
     maintainer_email='gsathishkumar15@gmail.com',
-    description='TODO: Package description',
+    description='A custom turtlesim package with various movement nodes',
     license='Apache License 2.0',
     extras_require={
         'test': [
@@ -27,6 +27,7 @@ setup(
             'turtle_linear_move = my_turtlesim_pkg.turtle_linear_move:main',
             'turtle_angular_move = my_turtlesim_pkg.turtle_angular_move:main',
             'turtle_square_move = my_turtlesim_pkg.turtle_square_move:main',
+            'turtle_motion_controller = my_turtlesim_pkg.turtle_motion_controller:main',
         ],
     },
 )
