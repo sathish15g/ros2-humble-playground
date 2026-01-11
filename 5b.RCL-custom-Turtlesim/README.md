@@ -1,129 +1,154 @@
-# 1. Project Overview
+# Robot Motion Control Using ROS 2
 
-This mini project demonstrates the implementation of a custom ROS 2 node that controls the motion of a turtle in the **turtlesim** environment. The node publishes velocity commands to move the turtle in straight lines and rotate it by precise angles, ultimately making the turtle trace a square path starting from its initial position.
+## Introduction
 
-The project reinforces core ROS 2 concepts such as node creation, publishers, subscribers, services, and basic motion control using feedback from sensors.
+Robot motion control involves directing a robot's movement through commands that specify velocities and directions. It is essential for applications ranging from autonomous navigation to industrial automation, ensuring precise and safe robot operations.
+
+Publishing to `/cmd_vel` is crucial as it sends velocity commands (linear and angular) to the robot's base controller, enabling real-time movement adjustments. Without proper `/cmd_vel` publishing, the robot cannot execute desired trajectories.
+
+The goal of this project is to implement a ROS 2 node that makes a robot (simulated turtle in turtlesim) move in a square path by publishing appropriate velocity commands.
+
+## Materials & Tools Used
+
+- **ROS 2 (Humble)**: The robotics middleware for node communication and message passing.
+- **Python**: Programming language used for implementing the ROS 2 node with `rclpy`.
+- **Turtlesim**: A simple simulator for testing robot motion control in ROS 2.
+- **Gazebo (optional)**: Advanced simulator for more complex robot environments (not used in this basic implementation).
+
+## Methodology
+
+### Steps to Create a Publisher Node in ROS 2
+
+1. Initialize a ROS 2 node using `rclpy.init()` and create a node class inheriting from `Node`.
+2. Create a publisher for the `/turtle1/cmd_vel` topic with message type `geometry_msgs/msg/Twist`.
+3. Implement functions for linear and angular motion.
+4. Use a loop to execute the square movement sequence.
+5. Publish zero velocities to stop the robot after completion.
+
+### Twist Message Explanation
+
+The `Twist` message contains two main components:
+- **Linear velocities**: `linear.x`, `linear.y`, `linear.z` (m/s) – controls forward/backward and lateral movement.
+- **Angular velocities**: `angular.x`, `angular.y`, `angular.z` (rad/s) – controls rotation around axes.
+
+For 2D movement (like turtlesim), primarily use `linear.x` for forward speed and `angular.z` for turning.
+
+### Logic of Moving in a Square Path
+
+- Use a loop that runs 4 times (one for each side).
+- In each iteration:
+  - Move linearly forward for a fixed duration.
+  - Rotate angularly by ~90 degrees for a fixed duration.
+- Control timing using `time.sleep()` to maintain consistent movement periods.
+- Publish velocities continuously during each motion phase.
+
+### Timing Control
+
+- `time.sleep(0.1)` is used in a loop to publish commands at 10 Hz during movement.
+- Duration parameters (e.g., 2.0 seconds for linear, 1.0 second for angular) ensure approximate distances and angles.
+
+## Problem-Solving Approach
+
+### Common Issues and Fixes
+
+- **Incorrect Timing**: Robot moves too fast/slow or turns inaccurately.
+  - **Fix**: Adjust duration and speed parameters; test incrementally.
+- **Overshooting Turns**: Turtle rotates more than 90 degrees.
+  - **Fix**: Reduce angular speed or duration; use pose feedback for precise control.
+- **Node Not Publishing**: Commands not reaching turtlesim.
+  - **Fix**: Verify topic names, check ROS 2 logs with `ros2 topic echo /turtle1/cmd_vel`.
+
+### Tuning Techniques
+
+- Start with low speeds and short durations for testing.
+- Use ROS 2 logging (`self.get_logger().info()`) to monitor movement phases.
+- Adjust parameters based on observed behavior in turtlesim.
+
+### Tips for Precise Movement and Debugging
+
+- Publish at consistent rates (e.g., 10 Hz) to avoid jerky motion.
+- Use `ros2 topic hz /turtle1/cmd_vel` to verify publishing frequency.
+- Implement pose subscription for closed-loop control if needed.
+
+## Diagrams/Flowcharts
+
+### Flowchart of Movement Loop
+
+```
+Start
+  |
+  v
+Initialize Node and Publisher
+  |
+  v
+Loop 4 times:
+  |
+  +--> Move Linear (publish linear.x, duration)
+  |     |
+  |     v
+  +--> Rotate Angular (publish angular.z, duration)
+  |
+  v
+Publish Zero Velocities (Stop)
+  |
+  v
+End
+```
+
+*(Placeholder: Insert flowchart image here, e.g., images/flowchart_square_movement.png)*
+
+### Diagram of Square Path
+
+```
+   +----> (Linear Move)
+   |     |
+   |     v
+   ^     +
+   |     |
+   +-----+ (Angular Rotate 90°)
+     ^
+     |
+     (Repeat 4 times)
+```
+
+*(Placeholder: Insert square path diagram here, e.g., images/square_path_diagram.png)*
 
 ![Turtle Moving in Square](images/motion%20controller.png)
 
----
+## Testing & Results
 
-## 2. Objectives
+### Testing Procedure
 
-* Create a custom ROS 2 node using `rclpy`
-* Publish velocity commands using `geometry_msgs/Twist`
-* Subscribe to pose feedback using `turtlesim/Pose`
-* Use ROS 2 services to reset and clear the simulator
-* Implement linear and angular motion functions
-* Make the turtle move in a square trajectory
+- Launch turtlesim: `ros2 run turtlesim turtlesim_node`
+- Run the motion control node: `ros2 run <package> <node>`
+- Observe the turtle tracing a square in the simulator window.
+- Check terminal logs for movement confirmations.
 
----
+### Results
 
-## 3. System Requirements
+*(Placeholder: Insert screenshot of turtlesim showing square path, e.g., images/turtlesim_square_result.png)*
 
-* Ubuntu 22.04
-* ROS 2 (Humble or compatible distribution)
-* turtlesim package
-* Python 3
-
----
-
-## 4. ROS 2 Concepts Used
-
-* **Node**: Custom motion controller node
-* **Publisher**: Publishes velocity commands to `/turtle1/cmd_vel`
-* **Subscriber**: Subscribes to `/turtle1/pose` for feedback
-* **Services**: Uses `/clear` and `/reset` services
-* **Messages**: `Twist`, `Pose`
-* **Spin and Callbacks**: `rclpy.spin_once()` for real-time feedback
-
-![ROS Graph](images/rosgraph-turtle-controller.png)
-
----
-
-## 5. Project Structure
+### Sample Terminal Logs
 
 ```
-ros2_ws/
- └── src/
-     └── turtle_motion_controller/
-         ├── turtle_motion_controller.py
-         ├── package.xml
-         ├── setup.py
-         └── README.md
+[INFO] [turtle_square_move]: Moving forward...
+[INFO] [turtle_square_move]: Rotating 90 degrees...
+[INFO] [turtle_square_move]: Moving forward...
+[INFO] [turtle_square_move]: Rotating 90 degrees...
+[INFO] [turtle_square_move]: Moving forward...
+[INFO] [turtle_square_move]: Rotating 90 degrees...
+[INFO] [turtle_square_move]: Moving forward...
+[INFO] [turtle_square_move]: Rotating 90 degrees...
+[INFO] [turtle_square_move]: Square completed
 ```
 
----
+*(Placeholder: Insert screenshot of logs, e.g., images/terminal_logs.png)*
 
-## 6. Functional Description
+## Conclusion
 
-### 6.1 Pose Tracking
+This project demonstrated key ROS 2 concepts including publishing to `/cmd_vel`, using the `Twist` message for velocity control, implementing movement logic with loops and timing, and debugging motion issues. The turtle successfully traced a square path, showcasing basic robot motion control.
 
-The turtle’s position and orientation are continuously updated by subscribing to the `/turtle1/pose` topic. This feedback is used to control angular motion accurately.
-
-### 6.2 Linear Motion
-
-The turtle moves forward at a constant linear speed for a fixed duration. This is used to draw each side of the square.
-
-![Linear Motion](images/Linear%20turtle%20move.png)
-
-### 6.3 Angular Rotation
-
-After completing each side, the turtle rotates by **90 degrees** using pose-based angle feedback. Angle normalization ensures rotation occurs in the shortest direction.
-
-![Angular Rotation](images/angular%20move%20turtle.png)
-
-### 6.4 Square Path Execution
-
-The turtle repeats linear motion followed by a 90-degree rotation four times, resulting in a square trajectory.
-
-![Square Path](images/motion%20controllerperfect%20square.png)
-
----
-
-## 7. Logging and Debugging
-
-The node uses ROS 2 logging to provide clear runtime information, including:
-
-* Start of each side movement
-* Current operation (linear or angular motion)
-* Completion of the square path
-
-These logs help in understanding execution flow and debugging motion behavior.
-
-![Debug Logs](images/motion%20controllerperfect%20square%20logs.png)
-
----
-
-## 8. How to Run the Project
-
-### Step 1: Start turtlesim
-
-```bash
-ros2 run turtlesim turtlesim_node
-```
-
-### Step 2: Run the motion controller node
-
-```bash
-ros2 run turtle_motion_controller turtle_motion_controller
-```
-
----
-
-## 9. Expected Output
-
-* The turtle starts from its default position
-* The screen is cleared and reset
-* The turtle moves forward and rotates alternately
-* A square shape is drawn on the turtlesim window
-
-Minor variations in the square shape may occur due to timing and execution delays, which are expected in time-based motion control.
-
-![Expected Output](images/debug%20turtlesim.png)
-
----
-
-## 10. Conclusion
-
-This mini project successfully demonstrates the use of ROS 2 communication mechanisms and basic motion control using feedback. It provides hands-on experience with publishers, subscribers, services, and logging while controlling a simulated robot in a structured manner.
+Potential extensions include:
+- Implementing triangular or circular paths by adjusting movement sequences.
+- Adding obstacle avoidance using laser scan data.
+- Integrating autonomous path planning with navigation stacks like Nav2.

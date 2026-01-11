@@ -258,7 +258,7 @@ rqt_graph
 - **Movement nodes**: Publisher nodes (linear/angular/square)
 - **Topics**: `/turtle1/cmd_vel`, `/turtle1/pose`
 
-![ROS Graph Visualization](../../images/rosgraph_turtlesim.png)
+![ROS Graph Visualization](./images/rosgraph_turtlesim.png)
 
 ## 11. Customization and Extensions
 
