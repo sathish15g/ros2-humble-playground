@@ -138,6 +138,130 @@ ros2 service list
 ros2 service call /spawn turtlesim/srv/Spawn "{x: 3.0, y: 3.0, theta: 0.0, name: 'turtle2'}"
 ```
 
+#### Service Interfaces
+
+Services use **request-response** communication patterns with defined interfaces:
+
+**Service Interface Structure:**
+```
+turtlesim/srv/Spawn.srv
+---
+# Request
+float32 x      # X position
+float32 y      # Y position
+float32 theta  # Orientation
+string name    # Turtle name
+---
+# Response
+string name    # Assigned turtle name
+```
+
+**Key Service Interface Concepts:**
+- **Request Message**: Data sent by client to server
+- **Response Message**: Data returned by server to client
+- **Service Type**: Defines the structure (e.g., `turtlesim/srv/Spawn`)
+
+**Inspect service interface:**
+```bash
+ros2 interface show turtlesim/srv/Spawn
+```
+
+### Actions
+
+Actions provide **long-running task execution** with feedback and cancellation:
+
+**List available actions:**
+```bash
+ros2 action list
+```
+
+#### Common Actions in Turtlesim
+
+| Action | Description |
+|--------|-------------|
+| `/turtle1/rotate_absolute` | Rotate turtle to absolute angle |
+
+**Action Interface Structure:**
+```
+turtlesim/action/RotateAbsolute.action
+---
+# Goal
+float32 theta  # Target angle
+---
+# Result
+float32 delta  # Angle difference
+---
+# Feedback
+float32 remaining  # Remaining angle
+```
+
+**Send action goal:**
+```bash
+ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/RotateAbsolute "{theta: 1.57}"
+```
+
+**Monitor action feedback:**
+```bash
+ros2 action list
+ros2 action info /turtle1/rotate_absolute
+```
+
+### Why Different Communication Patterns?
+
+ROS 2 provides multiple communication patterns because different robotics tasks require different interaction models:
+
+#### 1. Topics (Publishers & Subscribers)
+**Use Case:** Continuous data streaming, sensor data, status updates
+**Why needed:** Real-time data distribution to multiple subscribers
+**Example:** Turtle position updates, sensor readings, status monitoring
+
+#### 2. Services
+**Use Case:** Request-response operations, configuration changes, queries
+**Why needed:** Synchronous operations requiring confirmation
+**Example:** Spawning turtles, clearing screen, getting current state
+
+#### 3. Actions
+**Use Case:** Long-running tasks with progress feedback and cancellation
+**Why needed:** Complex operations requiring monitoring and control
+**Example:** Navigation tasks, manipulation sequences, calibration procedures
+
+#### 4. Parameters
+**Use Case:** Configuration and runtime tuning
+**Why needed:** Dynamic reconfiguration without code changes
+**Example:** Adjusting simulation parameters, tuning control gains
+
+### Communication Pattern Comparison
+
+| Pattern | Communication | Use Case | Example |
+|---------|---------------|----------|---------|
+| **Topics** | One-to-Many, Async | Continuous data | Position updates |
+| **Services** | One-to-One, Sync | Commands/Queries | Spawn turtle |
+| **Actions** | One-to-One, Async | Long tasks | Rotate to angle |
+| **Parameters** | Configuration | Settings | Background color |
+
+### When to Use Each Pattern
+
+**Use Topics when:**
+- Data needs to be shared with multiple nodes
+- Real-time performance is critical
+- Data is continuously generated
+
+**Use Services when:**
+- You need a response/confirmation
+- Operation should be synchronous
+- Querying current state
+
+**Use Actions when:**
+- Task takes significant time to complete
+- Progress monitoring is needed
+- Task might need cancellation
+- Feedback during execution is valuable
+
+**Use Parameters when:**
+- Configuration needs to persist
+- Runtime tuning is required
+- Settings affect multiple components
+
 ### Parameters
 
 Turtlesim supports runtime parameter configuration.

@@ -135,6 +135,8 @@ ros2 run example_service add_two_ints_client
 Result: sum = 15
 ```
 
+![Screenshot step by step](./images/service-clinet-interface.png)
+
 ## 7. Verify Using ROS CLI (Optional)
 
 ### Check service:
