@@ -13,7 +13,6 @@ The goal of this project is to implement a ROS 2 node that makes a robot (simula
 - **ROS 2 (Humble)**: The robotics middleware for node communication and message passing.
 - **Python**: Programming language used for implementing the ROS 2 node with `rclpy`.
 - **Turtlesim**: A simple simulator for testing robot motion control in ROS 2.
-- **Gazebo (optional)**: Advanced simulator for more complex robot environments (not used in this basic implementation).
 
 ## Methodology
 
@@ -30,6 +29,10 @@ The goal of this project is to implement a ROS 2 node that makes a robot (simula
 The `Twist` message contains two main components:
 - **Linear velocities**: `linear.x`, `linear.y`, `linear.z` (m/s) – controls forward/backward and lateral movement.
 - **Angular velocities**: `angular.x`, `angular.y`, `angular.z` (rad/s) – controls rotation around axes.
+
+![Linear movement](images/Linear%20turtle%20move.png)
+
+![Angular movement](images/angular%20move%20turtle.png)
 
 For 2D movement (like turtlesim), primarily use `linear.x` for forward speed and `angular.z` for turning.
 
@@ -58,6 +61,7 @@ For 2D movement (like turtlesim), primarily use `linear.x` for forward speed and
 - **Node Not Publishing**: Commands not reaching turtlesim.
   - **Fix**: Verify topic names, check ROS 2 logs with `ros2 topic echo /turtle1/cmd_vel`.
 
+
 ### Tuning Techniques
 
 - Start with low speeds and short durations for testing.
@@ -69,6 +73,8 @@ For 2D movement (like turtlesim), primarily use `linear.x` for forward speed and
 - Publish at consistent rates (e.g., 10 Hz) to avoid jerky motion.
 - Use `ros2 topic hz /turtle1/cmd_vel` to verify publishing frequency.
 - Implement pose subscription for closed-loop control if needed.
+
+![debugging to understand service, interface](images/debug%20turtlesim.png)
 
 ## Diagrams/Flowcharts
 
@@ -95,7 +101,7 @@ Publish Zero Velocities (Stop)
 End
 ```
 
-*(Placeholder: Insert flowchart image here, e.g., images/flowchart_square_movement.png)*
+![RQT Graph](images/rosgraph-turtle-controller.png)
 
 ### Diagram of Square Path
 
@@ -111,9 +117,8 @@ End
      (Repeat 4 times)
 ```
 
-*(Placeholder: Insert square path diagram here, e.g., images/square_path_diagram.png)*
 
-![Turtle Moving in Square](images/motion%20controller.png)
+
 
 ## Testing & Results
 
@@ -126,23 +131,11 @@ End
 
 ### Results
 
-*(Placeholder: Insert screenshot of turtlesim showing square path, e.g., images/turtlesim_square_result.png)*
+![Motion controller](images/motion%20controllerperfect%20square.png)
 
-### Sample Terminal Logs
+### Terminal Logs
 
-```
-[INFO] [turtle_square_move]: Moving forward...
-[INFO] [turtle_square_move]: Rotating 90 degrees...
-[INFO] [turtle_square_move]: Moving forward...
-[INFO] [turtle_square_move]: Rotating 90 degrees...
-[INFO] [turtle_square_move]: Moving forward...
-[INFO] [turtle_square_move]: Rotating 90 degrees...
-[INFO] [turtle_square_move]: Moving forward...
-[INFO] [turtle_square_move]: Rotating 90 degrees...
-[INFO] [turtle_square_move]: Square completed
-```
-
-*(Placeholder: Insert screenshot of logs, e.g., images/terminal_logs.png)*
+![Turtle Moving in Square](images/motion%20controller.png)
 
 ## Conclusion
 
