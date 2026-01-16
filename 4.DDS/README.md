@@ -210,3 +210,21 @@ DDS excels in demanding robotics applications:
 DDS forms the robust communication foundation of ROS 2, enabling real-time, secure, scalable, and decentralized inter-node communication. Understanding DDS concepts is essential for developing high-performance robotics applications with ROS 2.
 
 For further reading, refer to the [ROS 2 DDS documentation](https://docs.ros.org/en/humble/Concepts/About-DDS.html) and DDS specifications from OMG.
+
+---
+
+## 👤 Author
+
+**Sathish Kumar G**  
+Robotics & ROS 2  
+
+🔗 LinkedIn: https://www.linkedin.com/in/sathish15g/
+
+## 📄 License
+
+This project is licensed under the **Apache License 2.0**.  
+
+You are free to use, modify, distribute, and sublicense this work under the terms of the license.  
+For full license details, see the [LICENSE](../LICENSE) file in this repository.
+
+---

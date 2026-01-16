@@ -107,4 +107,20 @@ ros2 topic info /programming_jokes
   - `joke_publisher/README.md` — contains publisher details, code snippets, and run examples.
   - `joke_subscriber/README.md` — (added) contains subscriber details and usage examples.
 
-Would you like me to add a single `launch` file that starts both nodes together and an example `ros2 launch` instruction? 🔧
+---
+
+## 👤 Author
+
+**Sathish Kumar G**  
+Robotics & ROS 2  
+
+🔗 LinkedIn: https://www.linkedin.com/in/sathish15g/
+
+## 📄 License
+
+This project is licensed under the **Apache License 2.0**.  
+
+You are free to use, modify, distribute, and sublicense this work under the terms of the license.  
+For full license details, see the [LICENSE](../LICENSE) file in this repository.
+
+---

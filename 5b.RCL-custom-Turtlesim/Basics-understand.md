@@ -403,3 +403,22 @@ This custom Turtlesim package demonstrates fundamental ROS 2 concepts through pr
 The package serves as both an educational tool and a starting point for more complex robotic applications, illustrating how simple movement commands can create sophisticated robotic behaviors.
 
 **Happy Turtling! 🐢🤖**
+
+
+---
+
+## 👤 Author
+
+**Sathish Kumar G**  
+Robotics & ROS 2  
+
+🔗 LinkedIn: https://www.linkedin.com/in/sathish15g/
+
+## 📄 License
+
+This project is licensed under the **Apache License 2.0**.  
+
+You are free to use, modify, distribute, and sublicense this work under the terms of the license.  
+For full license details, see the [LICENSE](../LICENSE) file in this repository.
+
+---

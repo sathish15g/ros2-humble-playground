@@ -497,3 +497,21 @@ The implementation validates ROS 2 launch files as essential tools for:
 - **ROS 2 Cloud Integration**: Enable hybrid cloud-edge deployment scenarios
 - **Distributed Systems**: Support for geographically distributed ROS 2 networks
 - **Container Orchestration**: Integration with Docker and Kubernetes for scalable deployment
+
+---
+
+## 👤 Author
+
+**Sathish Kumar G**  
+Robotics & ROS 2  
+
+🔗 LinkedIn: https://www.linkedin.com/in/sathish15g/
+
+## 📄 License
+
+This project is licensed under the **Apache License 2.0**.  
+
+You are free to use, modify, distribute, and sublicense this work under the terms of the license.  
+For full license details, see the [LICENSE](../LICENSE) file in this repository.
+
+---

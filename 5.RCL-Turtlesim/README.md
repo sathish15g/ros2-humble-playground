@@ -467,3 +467,20 @@ Turtlesim serves as a foundational learning tool in ROS 2, demonstrating how com
 
 **Happy ROS 2 Learning! 🐢🚀**
 
+---
+
+## 👤 Author
+
+**Sathish Kumar G**  
+Robotics & ROS 2  
+
+🔗 LinkedIn: https://www.linkedin.com/in/sathish15g/
+
+## 📄 License
+
+This project is licensed under the **Apache License 2.0**.  
+
+You are free to use, modify, distribute, and sublicense this work under the terms of the license.  
+For full license details, see the [LICENSE](../LICENSE) file in this repository.
+
+---

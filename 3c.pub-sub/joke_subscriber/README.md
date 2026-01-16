@@ -60,4 +60,20 @@ python -m joke_subscriber.joke_subscriber
 
 ---
 
-If you want, I can add a small `launch` file that runs both `joke_publisher` and `joke_subscriber` together (and an example `ros2 launch` invocation). 🔧
+---
+
+## 👤 Author
+
+**Sathish Kumar G**  
+Robotics & ROS 2  
+
+🔗 LinkedIn: https://www.linkedin.com/in/sathish15g/
+
+## 📄 License
+
+This project is licensed under the **Apache License 2.0**.  
+
+You are free to use, modify, distribute, and sublicense this work under the terms of the license.  
+For full license details, see the [LICENSE](../../LICENSE) file in this repository.
+
+---

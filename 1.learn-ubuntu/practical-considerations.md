@@ -33,3 +33,21 @@ Linux are well-supported by NVIDIA and the broader robotics community.
   testing code locally, to containerizing applications, and finally deploying to
   embedded platforms like NVIDIA Jetson. This seamless workflow boosts
   productivity and reduces integration headaches.
+
+---
+
+## 👤 Author
+
+**Sathish Kumar G**  
+Robotics & ROS 2  
+
+🔗 LinkedIn: https://www.linkedin.com/in/sathish15g/
+
+## 📄 License
+
+This project is licensed under the **Apache License 2.0**.  
+
+You are free to use, modify, distribute, and sublicense this work under the terms of the license.  
+For full license details, see the [LICENSE](../LICENSE) file in this repository.
+
+---

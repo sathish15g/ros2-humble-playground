@@ -145,3 +145,21 @@ Potential extensions include:
 - Implementing triangular or circular paths by adjusting movement sequences.
 - Adding obstacle avoidance using laser scan data.
 - Integrating autonomous path planning with navigation stacks like Nav2.
+
+---
+
+## 👤 Author
+
+**Sathish Kumar G**  
+Robotics & ROS 2  
+
+🔗 LinkedIn: https://www.linkedin.com/in/sathish15g/
+
+## 📄 License
+
+This project is licensed under the **Apache License 2.0**.  
+
+You are free to use, modify, distribute, and sublicense this work under the terms of the license.  
+For full license details, see the [LICENSE](../LICENSE) file in this repository.
+
+---

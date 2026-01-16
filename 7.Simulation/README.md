@@ -187,6 +187,8 @@ This video focuses on the top toolbar icons, including:
 
 These resources were referenced for understanding Gazebo GUI navigation and tool usage during the simulation setup and testing phase.
 
+- Inspiration and support from the ROS 2 and Gazebo community.
+
 ---
 
 
@@ -207,5 +209,16 @@ Gazebo Classic integrated with ROS 2 provides a powerful simulation environment 
 
 ## 👤 Author
 
-Sathish Kumar G  
-ROS 2 & Robotics Learning Project
+**Sathish Kumar G**  
+Robotics & ROS 2  
+
+🔗 LinkedIn: https://www.linkedin.com/in/sathish15g/
+
+## 📄 License
+
+This project is licensed under the **Apache License 2.0**.  
+
+You are free to use, modify, distribute, and sublicense this work under the terms of the license.  
+For full license details, see the [LICENSE](../LICENSE) file in this repository.
+
+---

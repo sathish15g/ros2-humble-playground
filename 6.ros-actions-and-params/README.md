@@ -565,3 +565,21 @@ ros2_demo/
 - **Action**: Long-running task with feedback and cancellation
 - **Parameter**: Runtime node configuration
 - **Launch file**: Starts multiple nodes with configuration
+
+---
+
+## 👤 Author
+
+**Sathish Kumar G**  
+Robotics & ROS 2  
+
+🔗 LinkedIn: https://www.linkedin.com/in/sathish15g/
+
+## 📄 License
+
+This project is licensed under the **Apache License 2.0**.  
+
+You are free to use, modify, distribute, and sublicense this work under the terms of the license.  
+For full license details, see the [LICENSE](../LICENSE) file in this repository.
+
+---
