@@ -208,9 +208,6 @@ This makes sure your system has libraries required by packages (e.g. system libr
 
 ---
 
-
----
-
 ## 👤 Author
 
 **Sathish Kumar G**  
