@@ -41,6 +41,7 @@ ros2 topic list
 ```
 
 Output:
+
 ```
 /cmd_vel
 /odom
@@ -73,6 +74,7 @@ ros2 topic list
 ```
 
 New topics include:
+
 ```
 /clock
 /cmd_vel
@@ -96,6 +98,7 @@ New topics include:
 ```
 
 Key additions:
+
 - `/map`: The map being built by SLAM
 - `/map_metadata`: Information about the map
 - Various SLAM-specific topics
@@ -108,7 +111,10 @@ Now RViz2 can show meaningful data:
 ros2 launch nav2_bringup rviz_launch.py
 ```
 
+![1768808248268](image/Rviz2.png)
+
 In RViz2, you can now add displays for:
+
 - RobotModel (to see the 3D robot)
 - LaserScan (to see the LIDAR data)
 - Map (to see the SLAM-generated map)
@@ -119,18 +125,23 @@ In RViz2, you can now add displays for:
 You can drive the robot around to help SLAM build the map:
 
 Using teleop keyboard:
+
 ```bash
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
 
 Or publishing velocity commands:
+
 ```bash
 ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.2}, angular: {z: 0.5}}"
 ```
 
+[Click here to check simulation](image/tortoisebot3.mp4)
+
 ### Understanding Transforms (TF)
 
 Transforms describe how different coordinate frames relate to each other. For example:
+
 - `map`: The global map frame
 - `odom`: The odometry frame (relative to starting position)
 - `base_link`: The robot's main body frame
@@ -140,6 +151,7 @@ Before SLAM, the TF tree might look like this (see [TF frames snapshot 1](frames
 After SLAM starts building the map, the TF tree includes the map frame (see [TF frames snapshot 2](frames_2026-01-19_12.17.46.gv) and [TF frames snapshot 3](frames_2026-01-19_12.17.55.gv)).
 
 You can generate your own TF tree visualization:
+
 ```bash
 ros2 run tf2_tools view_frames
 ```
@@ -149,6 +161,7 @@ ros2 run tf2_tools view_frames
 To save data for later analysis in RViz2:
 
 Record a bag:
+
 ```bash
 ros2 bag record -a -o rviz2_bag
 ```
@@ -156,11 +169,13 @@ ros2 bag record -a -o rviz2_bag
 Stop recording with Ctrl+C.
 
 Play back the bag:
+
 ```bash
 ros2 bag play rviz2_bag
 ```
 
 Check bag info:
+
 ```bash
 ros2 bag info rviz2_bag
 ```
