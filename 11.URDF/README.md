@@ -133,6 +133,9 @@ Each link can have up to 4 important sections:
 2. **Collision**: Simplified shape (for detecting collisions)
 3. **Inertial**: Weight and balance (for physics simulation)
 
+![Robot Link](images/link.png)
+
+
 Here's an example of a base link:
 
 ```xml
@@ -163,7 +166,9 @@ Here's an example of a base link:
 </link>
 ```
 
-![Robot Link](images/link.png)
+
+![Link Tags](images/link-tag.png)
+
 
 **Important points:**
 - Every robot needs at least one link
@@ -174,6 +179,8 @@ Here's an example of a base link:
 
 A **joint** connects two links and defines how they can move relative to each other.
 
+![Joint Types](images/Visual.png)
+
 **Joint Types** (very important!):
 - **fixed**: No movement (like a sensor glued to the robot)
 - **revolute**: Rotates with limits (like a door hinge)
@@ -181,6 +188,8 @@ A **joint** connects two links and defines how they can move relative to each ot
 - **prismatic**: Moves in a straight line (like a drawer)
 - **floating**: Can move in 6 directions (rare)
 - **planar**: Moves in 2D (rare)
+
+![Joint Types](images/urdf-joint-types.png)
 
 Example of a wheel joint:
 
@@ -195,7 +204,7 @@ Example of a wheel joint:
 </joint>
 ```
 
-![Joint Types](images/Visual.png)
+![Joint Tags](images/joint-tag.png)
 
 **Important points:**
 - Every link (except the base) has exactly one parent joint
