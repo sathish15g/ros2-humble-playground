@@ -282,21 +282,81 @@ You should now see a wheel attached to the base that can rotate.
 - **xyz**: Translation in x, y, z
 - **rpy**: Rotation in roll, pitch, yaw (radians)
 
-## Troubleshooting
+## Debugging URDF Issues
 
-### Common Issues:
-1. **URDF not loading**: Check XML syntax with `xmllint`
-2. **Links not visible**: Ensure visual tags are properly defined
-3. **Joints not moving**: Check joint limits and types
+If your robot doesn't appear in RViz2, follow these debugging steps:
 
-### Validation Commands:
+### Step 1: Create Required Directories and Files
+
+First, ensure you have the necessary directories and files in your package:
+
 ```bash
-# Check URDF syntax
-xmllint --noout urdf/model.urdf
-
-# Use check_urdf tool
-ros2 run urdf check_urdf urdf/model.urdf
+cd urdf_ws/src/urdf_test
+mkdir launch urdf
 ```
+
+### Step 2: Add Required Files
+
+Make sure you have:
+- `urdf/model.urdf` - Your URDF file
+- `launch/display.launch.py` - Your launch file
+- Updated `CMakeLists.txt` with proper install directives
+
+### Step 3: Build and Source
+
+```bash
+cd urdf_ws
+colcon build
+source install/setup.bash
+```
+
+### Step 4: Launch and Configure RViz
+
+Launch your robot:
+
+```bash
+ros2 launch urdf_test display.launch.py
+```
+
+When RViz opens, configure it properly:
+
+1. **Set Fixed Frame**: In RViz, go to `Global Options → Fixed Frame = base_link`
+2. **Add RobotModel**: Click `Add → RobotModel`
+3. **Set RobotModel**: Set RobotModel Topic Description - /robot_descrption
+
+Your robot should now appear in RViz.
+
+### Step 5: Verify TF and Robot Description
+
+Check that `robot_state_publisher` is working:
+
+```bash
+# Check robot description is being published
+ros2 topic echo /robot_description
+```
+
+Expected output (truncated):
+```
+data: '<?xml version="1.0"?> <robot name="robot1">
+  <link name="base_link">
+  <visual> <geometry> <cylinder length="1.0" radius="0.4"/> </...'
+```
+
+Check TF frames:
+
+```bash
+ros2 run tf2_tools view_frames
+```
+
+Expected output should show:
+```
+base_link: 
+  parent: 'world'
+  broadcaster: 'default_authority'
+  rate: 10000.000
+```
+
+If `base_link` appears in the TF tree, your URDF is being processed correctly and should be visible in RViz.
 
 ## Next Steps
 
@@ -306,62 +366,6 @@ ros2 run urdf check_urdf urdf/model.urdf
 - Use Xacro for parameterized URDFs
 - Integrate with Gazebo for simulation
 
-Happy robot building! mkdir launch urdf
-sathish15g@sathish15g-VirtualBox:~/learning/ros2/ros2-humble-playground/11a.Custom-URDF/urdf_ws/src/urdf_test$ mkdir launch urdf
-sathish15g@sathish15g-VirtualBox:~/learning/ros2/ros2-humble-playground/11a.Custom-URDF/urdf_ws/src/urdf_test$ cd ../..
-sathish15g@sathish15g-VirtualBox:~/learning/ros2/ros2-humble-playground/11a.Custom-URDF/urdf_ws$ colcon build
-Starting >>> urdf_test
-Finished <<< urdf_test [0.48s]                
-
-Summary: 1 package finished [0.62s]
-sathish15g@sathish15g-VirtualBox:~/learning/ros2/ros2-humble-playground/11a.Custom-URDF/urdf_ws$ cd src/urdf_test/urdf/
-
-ADD Launch file
-ADD URDF File
-ADD CMAKE LIST CHANGE 
-
-COLCON BUILD
-SET the source
-lauunch the file
+Happy robot building! 
 
 
-✅ 4️⃣ RViz: REQUIRED STEPS (MOST COMMON MISS)
-
-When RViz opens:
-
-✔ Step 1: Set Fixed Frame
-Global Options → Fixed Frame = base_link
-
-✔ Step 2: Add RobotModel
-Add → RobotModel
-
-
-That’s it.
-Your cylinder will appear immediately.
-
-✅ 5️⃣ Verify robot_state_publisher is publishing TF
-
-Run:
-
-ros2 topic echo /robot_description
-
-
-and:
-
-ros2 run tf2_tools view_frames
-
-
-If base_link exists → RViz WILL show the robot.
-
-
-sathish15g@sathish15g-VirtualBox:~/learning/ros2/ros2-humble-playground/11a.Custom-URDF/urdf_ws$ ros2 topic echo /robot_description
-data: '<?xml version="1.0"?> <robot name="robot1">
-
-  <link name="base_link">
-
-  <visual> <geometry> <cylinder length="1.0" radius="0.4"/> </...'
----
-sathish15g@sathish15g-VirtualBox:~/learning/ros2/ros2-humble-playground/11a.Custom-URDF/urdf_ws$ ros2 run tf2_tools view_frames
-[INFO] [1769097790.072102366] [view_frames]: Listening to tf data for 5.0 seconds...
-[INFO] [1769097795.095782050] [view_frames]: Generating graph in frames.pdf file...
-[INFO] [1769097795.097693738] [view_frames]: Result:tf2_msgs.srv.FrameGraph_Response(frame_yaml="base_link: \n  parent: 'world'\n  broadcaster: 'default_authority'\n  rate: 10000.000\n  most_recent_transform: 0.000000\n  oldest_transform: 0.000000\n  buffer_length: 0.000\n")
